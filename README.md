@@ -1,4 +1,30 @@
-# Cronos
+# Cronos(.Unlimited)
+
+This library is a fork of [Cronos](https://github.com/HangfireIO/Cronos) that **removes the arbitrary limitation** preventing cron expressions beyond the year **2499**.
+
+## Why This Fork?
+**Cronos** is a great library, but it currently enforces a hard limit on cron expressions past the year 2499. This limitation conflicts with long-term scheduling requirements in [Occurify.TimeZones](https://github.com/Occurify/Occurify), a powerful and intuitive .NET library for defining, filtering, transforming, and scheduling timelines.
+
+## Status & Next Steps
+- ✅ An [issue](https://github.com/HangfireIO/Cronos/issues/78) has been opened regarding this limitation.
+- ✅ The changes made for this fork are submitted as a [pull request](https://github.com/HangfireIO/Cronos/pull/80) to Cronos.
+- 🔄 If Cronos removes or makes this limit configurable, this package will no longer be needed, and we encourage users to switch back to the official package.
+
+## Interested in This Feature?
+
+If this change is useful to you, consider using **Occurify.TimeZones**, which will be automatically updated with the latest version of Cronos when the issue is resolved.
+
+### Example Usage in Occurify
+
+```cs
+using Occurify.TimeZones;
+
+var cronTimeline = TimeZoneInstants.FromCron("0 * * * *");
+var previousOccurrence = cronTimeline.GetPreviousUtcInstant(DateTime.UtcNow);
+var nextOccurrence = cronTimeline.GetNextUtcInstant(DateTime.UtcNow);
+```
+
+## Cronos
 [![NuGet](https://img.shields.io/nuget/v/Cronos.svg)](https://www.nuget.org/packages/Cronos) [![Build status](https://ci.appveyor.com/api/projects/status/4elmix39mvr18cqf?svg=true)](https://ci.appveyor.com/project/hangfireio/cronos) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HangfireIO_Cronos&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=HangfireIO_Cronos) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=HangfireIO_Cronos&metric=bugs)](https://sonarcloud.io/summary/new_code?id=HangfireIO_Cronos) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=HangfireIO_Cronos&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=HangfireIO_Cronos)
 
 Cronos is a .NET library for parsing Cron expressions and calculating next occurrences. It was designed with time zones in mind, and intuitively handles [Daylight saving time](https://en.wikipedia.org/wiki/Daylight_saving_time) (also known as Summer time) transitions as in *nix Cron.
